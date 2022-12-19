@@ -1,41 +1,51 @@
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button } from "react-native";
 
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button } from 'react-native';
-// import ProfileScreen from './ProfileScreen';
-import Top from './Top';
-import Center from './Center';
-import Bottom from './Bottom';
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from "react";
 
-export default function Home({navigation}) {
+import { CONTINENT_QUERY, COUNTRY_QUERY, LANGUAGES_QUERY } from "./Queries";
+import { useQuery } from "@apollo/client";
 
+export default function Home({ navigation }) {
+  const { data: continentData, loading: continentLoading } = useQuery(CONTINENT_QUERY); //execute query
+  const { data: countryData, loading: countryLoading } = useQuery(COUNTRY_QUERY); //execute query
+  const { data: languagesData, loading: languagesLoading } = useQuery(LANGUAGES_QUERY); //execute query
+  useEffect(() => {
+    console.log(continentData);
+  }, [continentData]);
+  useEffect(() => {
+    console.log(countryData);
+  }, [countryData]);
+  useEffect(() => {
+    console.log(languagesData);
+  }, [languagesData]);
+
+  const saveSettings = () => {
+    global.setting = {
+      fs: 50,
+      fc: "green",
+      bc: "white",
+    };
+    console.log("pressed");
+
+    navigation.pop();
+  };
   return (
-    <View style={{flex:1, backgroundColor:'black'}}>
-      {console.log('Return')}
+    <View style={{ flex: 1, backgroundColor: "black" }}>
+      {console.log("Return")}
 
       <Button
-          title="Go to Next Screen"
-          onPress={() =>
-          navigation.navigate('ProfileScreen',{id:'hef34231'})
-        }
-        />
+        title="Go to Next Screen"
+        onPress={() => {
+          saveSettings();
+          navigation.navigate("ProfileScreen", { id: "hef34231" });
+        }}
+      />
 
       {/* <Button title='Minus' onPress={()=>setState({count:1})} /> */}
-      
-      <Button
-          title="Go to Setting Screen"
-          onPress={() =>
-          navigation.navigate('Settings', { name: 'Akhzar' })
-        }
-        />
 
-        <Button
-          title="Go to Chatting Screen"
-          onPress={() =>
-          navigation.navigate('Chatting',{id:'bcs1920cs'})
-        }
-        />
-     
+      <Button title="Go to Setting Screen" onPress={() => navigation.navigate("Settings", { name: "Akhzar" })} />
+
+      <Button title="Go to Chatting Screen" onPress={() => navigation.navigate("Chatting", { id: "bcs1920cs" })} />
     </View>
   );
 }
@@ -43,17 +53,11 @@ export default function Home({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
-
-
-
-
-
-
 
 // import { StatusBar } from 'expo-status-bar';
 // import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button } from 'react-native';
@@ -134,7 +138,6 @@ const styles = StyleSheet.create({
 // //     // console.log('useEffect flag Value is =',flag)
 // // },[number])
 
-
 // //   useEffect(()=>{
 // //     flag = 190;
 // //     console.log('useEffect []', flag);
@@ -176,12 +179,12 @@ const styles = StyleSheet.create({
 //   //   console.log('useEffect', flag);
 //   //   setCount(count+1);
 //   // },[props])
-  
+
 //   render(){
 //   return (
 //     <View style={{flex:1, backgroundColor:'black'}}>
 //       {console.log('Return')}
-      
+
 //       {/* <Top name="Akhzar Nazir" /> */}
 //       {/* <Center /> */}
 //       {/* <Bottom /> */}
@@ -194,7 +197,7 @@ const styles = StyleSheet.create({
 //         />
 
 //       <Button title='Minus' onPress={()=>this.setState({count:1})} />
-      
+
 //       <Button
 //           title="Go to Setting Screen"
 //           onPress={() =>
@@ -203,11 +206,11 @@ const styles = StyleSheet.create({
 //         />
 
 //     {/* <Button title='PLUS' onPress={()=>setCount(count+1)} />
-      
+
 //     <Button title='Minus' onPress={()=>setCount(count-1)} />
-    
+
 //     <Button title='Number' onPress={()=>setNumber(number+1)} /> */}
-     
+
 //     </View>
 //   );
 //   }
